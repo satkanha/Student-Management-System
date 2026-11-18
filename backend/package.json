@@ -1,0 +1,21 @@
+{
+  "name": "student-management-system",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node --watch app.js",
+    "test": "node --test tests/*.test.js",
+    "db:check": "node scripts/check-db.js",
+    "qa": "node scripts/qa-capstone.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "mysql2": "^3.15.3"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

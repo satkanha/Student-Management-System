@@ -1,0 +1,450 @@
+{
+  "date": "2026-11-18",
+  "timezone": "Asia/Phnom_Penh",
+  "node": "v26.3.0",
+  "isolatedDatabase": true,
+  "applicationDataUnchanged": true,
+  "results": [
+    {
+      "id": "QA-01",
+      "module": "Database",
+      "action": "Pool connectivity",
+      "data": "SELECT 1",
+      "expected": "Successful pooled query",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-02",
+      "module": "Database",
+      "action": "Tables and constraints",
+      "data": "information_schema",
+      "expected": "3 tables; PK/UK/FK/CHECK; utf8mb4; RESTRICT",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-03",
+      "module": "Database",
+      "action": "Schema reimport preserves data",
+      "data": "Existing QA student + schema.sql",
+      "expected": "Same row remains; no duplicate seeds",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-04",
+      "module": "Dashboard",
+      "action": "Seed counts and recent records",
+      "data": "Seed database",
+      "expected": "200; 3/3/2; newest students",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-05",
+      "module": "Dashboard",
+      "action": "Empty database",
+      "data": "Own disposable QA tables",
+      "expected": "200; 0/0/0; recent []",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-06",
+      "module": "Students",
+      "action": "Create",
+      "data": "Valid unique student",
+      "expected": "201 with generated ID",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-07",
+      "module": "Students",
+      "action": "List",
+      "data": "GET /students",
+      "expected": "200 including created record",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-08",
+      "module": "Students",
+      "action": "Details",
+      "data": "Created ID",
+      "expected": "200 matching fields",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-09",
+      "module": "Students",
+      "action": "Update and unchanged update",
+      "data": "Change phone; repeat PUT",
+      "expected": "200 both times, values persist",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-10",
+      "module": "Students",
+      "action": "Delete",
+      "data": "Separate temporary student",
+      "expected": "204 empty; subsequent GET 404",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-11",
+      "module": "Students",
+      "action": "Required fields",
+      "data": "Omit each required field",
+      "expected": "400 each time",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-12",
+      "module": "Students",
+      "action": "Invalid data types and limits",
+      "data": "Bad email/date/status/length/arrays",
+      "expected": "400; no insertion",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-13",
+      "module": "Students",
+      "action": "Duplicate email",
+      "data": "New code, same email",
+      "expected": "409",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-14",
+      "module": "Students",
+      "action": "Duplicate code",
+      "data": "New email, same code",
+      "expected": "409",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-15",
+      "module": "Students",
+      "action": "Malformed IDs",
+      "data": "abc, zero, negative, overflow",
+      "expected": "400",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-16",
+      "module": "Students",
+      "action": "Nonexistent record",
+      "data": "Missing ID: GET/PUT/DELETE",
+      "expected": "404 for each",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-17",
+      "module": "Students",
+      "action": "Name search",
+      "data": "Quality Tester",
+      "expected": "200 matching student",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-18",
+      "module": "Students",
+      "action": "Code and email search",
+      "data": "QA-STUDENT, quality@example.com",
+      "expected": "Matching student for both",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-19",
+      "module": "Students",
+      "action": "Search no match",
+      "data": "NoSuchStudentQA",
+      "expected": "200 and []",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-20",
+      "module": "Courses",
+      "action": "Create",
+      "data": "Valid course",
+      "expected": "201 generated ID",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-21",
+      "module": "Courses",
+      "action": "List and details",
+      "data": "Created course ID",
+      "expected": "200, matching code/name",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-22",
+      "module": "Courses",
+      "action": "Update",
+      "data": "Credits 4",
+      "expected": "200, persisted credits",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-23",
+      "module": "Courses",
+      "action": "Delete",
+      "data": "Separate temporary course",
+      "expected": "204 empty, repeated DELETE 404",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-24",
+      "module": "Courses",
+      "action": "Input validation",
+      "data": "Missing code/name; invalid credits/type",
+      "expected": "400 for all",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-25",
+      "module": "Courses",
+      "action": "Duplicates and invalid/missing IDs",
+      "data": "Existing code; abc; missing unsigned ID",
+      "expected": "409 / 400 / 404",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-26",
+      "module": "Courses",
+      "action": "Keyword search",
+      "data": "Name, code, description, no match",
+      "expected": "Correct matches; 200 [] when absent",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-27",
+      "module": "Enrollments",
+      "action": "Create",
+      "data": "Valid student/course pair",
+      "expected": "201 joined record",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-28",
+      "module": "Enrollments",
+      "action": "List and details",
+      "data": "Created enrollment",
+      "expected": "200 with joined names and IDs",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-29",
+      "module": "Enrollments",
+      "action": "Update status and course reference",
+      "data": "Completed; alternate course",
+      "expected": "200; both fields changed",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-30",
+      "module": "Enrollments",
+      "action": "Delete",
+      "data": "Separate pair",
+      "expected": "204 empty; detail 404",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-31",
+      "module": "Enrollments",
+      "action": "Duplicate pair",
+      "data": "Same student/course",
+      "expected": "409",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-32",
+      "module": "Enrollments",
+      "action": "Missing student reference",
+      "data": "student_id 4294967295",
+      "expected": "400",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-33",
+      "module": "Enrollments",
+      "action": "Missing course reference",
+      "data": "course_id 4294967295",
+      "expected": "400",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-34",
+      "module": "Enrollments",
+      "action": "Invalid body and IDs",
+      "data": "Missing fields, array IDs, status, missing record",
+      "expected": "400 invalid / 404 missing",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-35",
+      "module": "Relationships",
+      "action": "Restrict parent deletion",
+      "data": "Enrolled student/course",
+      "expected": "409 both; records preserved",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-36",
+      "module": "Enrollments",
+      "action": "Keyword search",
+      "data": "Student name/code; course name/code; absent",
+      "expected": "Matches and 200 []",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-37",
+      "module": "API",
+      "action": "Malformed JSON / query / route",
+      "data": "Broken JSON, repeated q, >200 chars, unknown route",
+      "expected": "Consistent 400/404 JSON",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-38",
+      "module": "SQL",
+      "action": "Literal wildcard and injection search",
+      "data": "%, _, !, backslash, SQL-looking text",
+      "expected": "Literal safe search, no unintended rows",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-39",
+      "module": "API",
+      "action": "Safe 500 response",
+      "data": "Simulated database failure",
+      "expected": "Generic JSON; no credential details",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-40",
+      "module": "Frontend",
+      "action": "Dashboard and navigation",
+      "data": "All four pages",
+      "expected": "Visible totals, recent records, active nav",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-41",
+      "module": "Frontend",
+      "action": "Student create/view/edit/search",
+      "data": "UI-STUDENT with optional null fields",
+      "expected": "Bound edit fields; persisted change; filtered row",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-42",
+      "module": "Frontend",
+      "action": "Student browser validation / duplicate feedback",
+      "data": "Missing required fields, malformed email, duplicate email",
+      "expected": "Native validity blocks invalid; API 409 displayed",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-43",
+      "module": "Frontend",
+      "action": "Student cancel / confirm delete",
+      "data": "Separate UI deletion record",
+      "expected": "Cancel preserves; confirm removes without reload",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-44",
+      "module": "Frontend",
+      "action": "Course CRUD/search and safe detail rendering",
+      "data": "UI-COURSE; HTML-looking description",
+      "expected": "Create/view/edit/delete; escaped text; no reload",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-45",
+      "module": "Frontend",
+      "action": "Enrollment CRUD/search / duplicate / relationship errors",
+      "data": "UI student/course pair",
+      "expected": "Joined names; edits bind; 409 feedback; delete",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-46",
+      "module": "Frontend",
+      "action": "CRUD updates without document reload",
+      "data": "Instrumented student/course/enrollment actions",
+      "expected": "Same window marker and zero navigation requests",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-47",
+      "module": "Frontend",
+      "action": "Loading / empty / network error / recovery",
+      "data": "Delayed and aborted fetch, no matches",
+      "expected": "Visible loading/empty/error; Refresh recovers",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-48",
+      "module": "Frontend",
+      "action": "Responsive layout / keyboard dialogs",
+      "data": "375 / 768 / 1440px widths; Escape and Tab",
+      "expected": "No document overflow, visible navigation, trapped focus",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    },
+    {
+      "id": "QA-49",
+      "module": "Submission",
+      "action": "Structure / asset delivery / secrets / data preservation",
+      "data": "Required docs, source, ignore rules, live data",
+      "expected": "Files present; assets 200; secrets ignored; live data unchanged",
+      "actual": "All assertions passed",
+      "status": "Pass"
+    }
+  ]
+}

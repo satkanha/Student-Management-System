@@ -1,0 +1,18 @@
+SELECT 1 AS connection_ok;
+SELECT SCHEMA_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='student_management';
+USE student_management;
+SHOW TABLES;
+SHOW CREATE TABLE students;
+SHOW CREATE TABLE courses;
+SHOW CREATE TABLE enrollments;
+SELECT (SELECT COUNT(*) FROM students) AS students,
+ (SELECT COUNT(*) FROM courses) AS courses,
+ (SELECT COUNT(*) FROM enrollments) AS enrollments;
+SELECT id, student_code, first_name, last_name, status FROM students ORDER BY id DESC LIMIT 10;
+SELECT TABLE_NAME, CONSTRAINT_NAME, CONSTRAINT_TYPE
+ FROM information_schema.TABLE_CONSTRAINTS
+ WHERE CONSTRAINT_SCHEMA='student_management'
+ ORDER BY TABLE_NAME, CONSTRAINT_TYPE;
+SELECT TABLE_NAME, COLUMN_NAME, REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME
+ FROM information_schema.KEY_COLUMN_USAGE
+ WHERE TABLE_SCHEMA='student_management' AND REFERENCED_TABLE_NAME IS NOT NULL;
