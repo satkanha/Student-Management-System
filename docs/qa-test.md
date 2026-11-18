@@ -103,3 +103,7 @@ Use the path to your own Chrome installation on other operating systems. Browser
 - [ ] User approves pushing the reviewed local commit.
 - [ ] Push to the existing repository after approval, then confirm files on GitHub.
 - [ ] Complete the Navicat/classroom demonstration and instructor-specific submission materials.
+
+## Deployment preparation
+
+The 49-case suite was rerun after adding the configurable frontend API URL, production admin gate, exact CORS allowlist, verified database TLS options, and health endpoint: all 49 cases passed locally. New deployment/security checks and hosted Not Run items are reported separately in [deployment-test.md](deployment-test.md). No local result is presented as a completed Render/Pages deployment.

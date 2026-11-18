@@ -11,3 +11,6 @@ playwright-report/
 *.sql.gz
 *.pem
 *.key
+certs/
+*.crt
+pages-dist/

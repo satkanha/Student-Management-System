@@ -13,7 +13,7 @@ School administrators need a consistent way to maintain student records, course 
 
 ## Scope and stack
 
-Included: overview totals and recent students; CRUD/details/search for three modules; modal forms, loading/empty/error states, confirmation, and notifications. No page reloads for CRUD. Excluded: authentication, grades, attendance, payments, pagination, and public deployment.
+Included: overview totals and recent students; CRUD/details/search for three modules; modal forms, loading/empty/error states, confirmation, and notifications. No page reloads for CRUD. The original capstone excludes grades, attendance, payments, and pagination. The deployment extension below adds a single-admin production gate and prepares public hosting; multi-user roles and identity remain excluded.
 
 Backend: Node.js, Express 5, dotenv, mysql2/promise. Database: MySQL with pooled connections. Frontend: HTML5, CSS3, vanilla JavaScript ES modules, native fetch and DOM APIs. Tests use Node's built-in test runner and assert library.
 
@@ -143,3 +143,7 @@ The root cause was ER_BAD_DB_ERROR: MySQL was running but student_management did
 The submission suite has 49 stable QA IDs documented in docs/qa-test.md, with actual machine-readable outcomes in docs/qa-results.json. It tests a new disposable MySQL schema and compares application-record fingerprints before/after. Browser tests use optional tooling outside runtime dependencies and instrument CRUD actions to assert that the document is not reloaded. Network failure, loading, empty state, duplicate errors, and safe text rendering are included. A 500 response is tested using a simulated pool failure and is labeled as such in the report.
 
 Numeric IDs and credits reject arrays/booleans, and birth dates reject non-string values. Searches escape wildcard characters with an explicit SQL ESCAPE character so literal matching does not depend on MySQL backslash mode. The existing MRC and frontend designs are preserved.
+
+## Deployment extension
+
+The prepared deployment retains the existing MRC and static UI: GitHub Pages serves frontend-only artifacts; Render runs Express using PORT; a hosted MySQL provider stores records with verified TLS and restricted access. Production data endpoints require administrator sign-in; health checks remain public. Exact CORS origins permit the Pages domain, while database and admin credentials remain server-side. Hosting is pending account access, database provisioning, an approved source push, and live verification. See docs/deployment.md.

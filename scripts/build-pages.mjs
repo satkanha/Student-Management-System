@@ -1,0 +1,12 @@
+import {cp,mkdir,writeFile,rm} from 'node:fs/promises';
+const value=process.env.API_BASE_URL;
+if(!value)throw new Error('Set API_BASE_URL to the deployed HTTPS backend URL ending in /api.');
+const url=new URL(value);
+if(url.protocol!=='https:'||url.username||url.password||url.search||url.hash||url.pathname.replace(/\/$/,'')!=='/api')throw new Error('API_BASE_URL must be an HTTPS URL ending in /api, with no credentials, query, or fragment.');
+const output=new URL('../pages-dist/',import.meta.url);
+await rm(output,{recursive:true,force:true});
+await mkdir(output,{recursive:true});
+await cp(new URL('../frontend/',import.meta.url),output,{recursive:true});
+await writeFile(new URL('js/config.js',output),`// Public API endpoint, generated for GitHub Pages.\nexport const API_BASE_URL = ${JSON.stringify(url.href.replace(/\/$/,''))};\n`);
+await writeFile(new URL('.nojekyll',output),'');
+console.log('GitHub Pages artifact prepared in pages-dist. No backend or environment files included.');

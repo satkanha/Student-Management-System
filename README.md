@@ -140,7 +140,7 @@ See [the plan](docs/plan.md) for field contracts and database details.
 npm test --prefix backend
 ```
 
-Runs six validation tests. The older integration suite is skipped unless `SMS_INTEGRATION=1` is set. Run it only with a disposable database selected through DB_NAME and appropriate connection variables.
+Runs six validation tests plus four deployment/security tests. The older integration suite is skipped unless `SMS_INTEGRATION=1` is set. Run it only with a disposable database selected through DB_NAME and appropriate connection variables.
 
 The submission suite in `backend/scripts/qa-capstone.js` defines **49 numbered cases** spanning database setup/constraints, dashboard counts and empty state, CRUD/search/validation for all modules, HTTP errors, browser workflows, responsiveness, and submission checks. It creates a uniquely named QA database from schema.sql, serves the app on a temporary loopback port, verifies that live application records remain unchanged, and removes only its own QA database. The MySQL QA account needs CREATE/DROP DATABASE permissions. The application account itself does not need those permissions.
 
@@ -202,7 +202,7 @@ The open workspace is already the project root; no extra enclosing directory is 
 
 ## Submission and scope
 
-Include the source, schema, docs, example environment file, and package lock. Exclude `.env` and `node_modules`. No GitHub publication has been performed. This capstone has no authentication/authorization and should run locally or in a trusted classroom environment; public multi-user deployment would require that additional scope.
+Include the source, schema, docs, example environment file, and package lock. Exclude `.env` and `node_modules`. The initial capstone commit is already on origin/main; deployment changes require a new approved push. Local classroom mode remains available. Production requires administrator sign-in, exact HTTPS frontend origins, and verified database TLS. The admin gate is a single-account capstone solution; it does not implement roles or multi-user identity.
 
 ## Navicat and repaired local setup
 
@@ -232,3 +232,30 @@ git push -u origin main
 ```
 
 If HTTPS authentication is required, sign in locally with `gh auth login` or Git's credential helper. Never embed a token in the remote URL, source code, or README. The repository was inspected read-only; no remote publication was performed during preparation.
+
+## Deploy publicly: GitHub Pages + Render + hosted MySQL
+
+Follow [the complete deployment guide](docs/deployment.md). The existing repository is retained; the application is not rebuilt or moved to another framework.
+
+Prepared configuration:
+
+- `.github/workflows/pages.yml`: manual GitHub Pages workflow publishing only frontend assets.
+- `scripts/build-pages.mjs`: generates public API configuration from the GitHub Actions **API_BASE_URL** variable (the Render HTTPS URL ending in `/api`), retaining relative page/asset links.
+- `render.yaml`: Node 24 service, repository-root build/start commands, platform PORT support, database readiness health check, and environment variables/secrets.
+- MySQL pool: DB_SSL=true enables verified certificate and hostname checking; DB_SSL_CA or DB_SSL_CA_FILE supplies the provider CA when needed. Production refuses plaintext DB connections or missing credentials.
+- FRONTEND_ORIGINS: exact HTTPS origin allowlist. For this Pages project use `https://satkanha.github.io`, without the repository path. Authorization preflights are supported; no wildcard CORS or cookie credentials.
+- ADMIN_USERNAME / ADMIN_PASSWORD: production sign-in. Set a unique random password of at least 16 characters privately in Render. Passwords remain in page memory and are never stored in localStorage/sessionStorage; navigation requires signing in again.
+- `scripts/smoke-hosted.mjs`: opt-in post-deployment CRUD/search check with temporary records and cleanup.
+
+Hosting accounts and the database must be configured before deployment. Import schema.sql through a TLS-verified administrative Navicat connection, then use a restricted runtime DB account. Allow only Render's outbound ranges and your administration IP/private tunnel. Never expose the Mac's local database publicly.
+
+| Website/component | URL/status |
+| --- | --- |
+| Local development | http://localhost:3000 |
+| Expected Pages address | https://satkanha.github.io/Student-Management-System/ — not verified deployed |
+| Actual Render HTTPS URL | Pending account/service provisioning |
+| Hosted MySQL connection | Pending provider, TLS CA, credentials, and access restrictions |
+
+**No hosted deployment or hosted CRUD success is claimed.** GitHub Pages settings, Render creation, hosted Navicat TLS, and final public URLs require account access. The deployment guide records each remaining action. New source changes must be approved before pushing; automatic Render deployment is disabled and Pages deployment is manual.
+
+Deployment preparation was verified locally: 28 API/configuration tests passed, the 49-case capstone regression passed, and a separate-origin Chrome simulation verified the Pages project path, CORS, sign-in, protected data reads, and network-error handling. Hosted HTTPS and the real MySQL TLS handshake remain Not Run. See [deployment results](docs/deployment-test.md).
